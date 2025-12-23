@@ -106,6 +106,8 @@ Contributions are what make the open-source community such an amazing place to l
 
 5. Open a Pull Request
 
+Please read our [Contribution Guidelines](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
 ## 📝 License
 
 Distributed under the AGPLv3 License. See LICENSE for more information.
