@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../node_modules/.prisma/client"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Monitor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  type      String   // HTTP, TCP
+  interval  Int      // in seconds
+  status    String   @default("UP") // UP, DOWN
+  lastCheck DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  heartbeats Heartbeat[]
+  incidents  Incident[]
+}
+
+model Heartbeat {
+  id        Int      @id @default(autoincrement())
+  monitorId Int
+  status    String   // UP, DOWN
+  latency   Int      // in ms
+  timestamp DateTime @default(now())
+
+  // Optional system metrics (if agent is used later)
+  cpu       Int?
+  memory    Int?
+
+  monitor   Monitor  @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId])
+  @@index([timestamp])
+}
+
+model Incident {
+  id         Int      @id @default(autoincrement())
+  monitorId  Int
+  status     String   // OPEN, RESOLVED
+  startedAt  DateTime @default(now())
+  resolvedAt DateTime?
+
+  monitor    Monitor  @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+  @@index([monitorId])
+}

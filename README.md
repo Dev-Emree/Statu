@@ -50,9 +50,9 @@ Unlike heavy enterprise solutions, Statu focuses on **speed, minimalism, and eas
 
 Statu is built with modern web technologies to ensure performance and maintainability:
 
-- **Backend:** Node.js (TypeScript)
-- **Frontend:** React / Next.js *(Planlanan stack'e göre burayı güncelleyebilirsin)*
-- **Database:** SQLite / PostgreSQL
+- **Backend:** Node.js (TypeScript) / NestJS / Fastify
+- **Frontend:** React / Next.js
+- **Database:** SQLite / PostgreSQL (Prisma)
 - **Deployment:** Docker & Docker Compose
 
 ## 🚀 Getting Started
@@ -75,18 +75,33 @@ Statu is built with modern web technologies to ensure performance and maintainab
    npm install
    ```
 
-3. Run the development server
+3. Setup Database (SQLite by default)
 
    ```Bash
-   npm run dev
+   # Create .env from example (if any) or ensure DATABASE_URL is set
+   echo 'DATABASE_URL="file:./dev.db"' > .env
+
+   # Run migrations
+   npx prisma migrate dev
    ```
-Open your browser and navigate to `http://localhost:3000`.
+
+4. Run the development server (Backend + Frontend)
+
+   ```Bash
+   # Start Backend
+   npm run start:dev &
+
+   # Start Frontend (in a separate terminal)
+   npm run start:frontend
+   ```
+
+Open your browser and navigate to `http://localhost:3000` (Frontend port may vary, check console).
 
 ## 🗺️ Roadmap
 
 We are currently in the early stages of development. Here is the plan:
-- [ ] Core Monitoring Engine (HTTP/TCP/Ping)
-- [ ] Basic Dashboard UI
+- [x] Core Monitoring Engine (HTTP/TCP/Ping)
+- [x] Basic Dashboard UI
 - [ ] Notification System (Email & Webhooks)
 - [ ] Public Status Pages
 - [ ] User Authentication & Multi-user support
